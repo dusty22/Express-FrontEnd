@@ -1,0 +1,174 @@
+ <!-- 
+ <div [hidden]="categories.length==0">
+<h2>Top {{attributes.perPage}} Categories of Questions</h2>
+<div class="container-fluid">
+<table class='table-responsive table'>
+  <thead>
+  <th>Choose your categories:</th>
+</thead>
+  <tr *ngFor="let category of categories | orderBy : 'name'; let i=index" (click)='addCategory(category)' class="clickable" >
+    <td>
+      
+  {{i+1}}</td><td> {{category.name}}</td>
+  </tr>
+</table>
+<table class='table-responsive table'>
+  <thead>
+  <th>Chosen categories:</th>
+</thead>
+  <tr *ngFor="let category of chosenCategories;let i=index" (click)='removeCategory(category)' class="clickable" >
+    <td>
+  {{i+1}}</td><td> {{category.name}}</td>
+  </tr>
+</table>
+</div>
+<br/>&nbsp;
+</div>
+-->
+
+<head>
+  <style>
+  .button {
+      background-color: rgb(92, 212, 228); /* Blue */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+  }
+ 
+
+  .button-2 {
+      background-color: rgb(110, 236, 60); /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+  }
+  
+  .button1 {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+  .button2:hover {
+      box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+
+  div.card {
+  width: 250px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  margin: 12px 2px;
+  display: inline-block;
+
+}
+
+div.card:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+div.header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    font-size: 40px;
+}
+
+div.container {
+    padding: 10px;
+}
+
+  </style>
+  </head>
+
+
+<div style="text-align:center">
+  <p>Question Info<p>
+  <p>Click a category, then click Show Info to display how many question are in that category</p>
+
+<button class="button button2" (click)="setCategory(9)"> General Knowledge </button>
+<button class="button button2" (click)="setCategory(10)"> Entertainment: Books </button>
+<button class="button button2" (click)="setCategory(11)"> Entertainment: Film </button>
+<button class="button button2" (click)="setCategory(12)"> Entertainment: Music </button>
+<button class="button button2" (click)="setCategory(13)"> Entertainment: Musicals & Theatres </button>
+<button class="button button2" (click)="setCategory(14)"> Entertainment: Television </button>
+<button class="button button2" (click)="setCategory(15)"> Entertainment: Video Games </button>
+<button class="button button2" (click)="setCategory(16)"> Entertainment: Board Games </button>
+<button class="button button2" (click)="setCategory(17)"> Science & Nature </button>
+<button class="button button2" (click)="setCategory(18)"> Science: Computers </button>
+<button class="button button2" (click)="setCategory(19)"> Science: Mathematics </button>
+<button class="button button2" (click)="setCategory(20)"> Mythology </button>
+<button class="button button2" (click)="setCategory(21)"> Sports </button>
+<button class="button button2" (click)="setCategory(22)"> Geography </button>
+<button class="button button2" (click)="setCategory(23)"> History </button>
+<button class="button button2" (click)="setCategory(24)"> Politics </button>
+<button class="button button2" (click)="setCategory(25)"> Art </button>
+<button class="button button2" (click)="setCategory(26)"> Celebrities </button>
+<button class="button button2" (click)="setCategory(27)"> Animals </button>
+<button class="button button2" (click)="setCategory(28)"> Vehicles </button>
+<button class="button button2" (click)="setCategory(29)"> Entertainment: Comics </button>
+<button class="button button2" (click)="setCategory(30)"> Science: Gadgets </button>
+<button class="button button2" (click)="setCategory(31)"> Entertainment: Japanese Anime & Manga </button>
+<button class="button button2" (click)="setCategory(32)"> Entertainment: Cartoon & Animations </button>
+<p></p>
+<button class="button-2 button1" (click)="onTestGet()">Show Info</button>
+<p></p>
+<div class="card">
+  <div class="header">
+    <h1>{{totalQuestions}}</h1>
+  </div>
+
+  <div class="container">
+    <p>Question Count Total</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="header">
+    <h1>{{totalEasy}}</h1>
+  </div>
+
+  <div class="container">
+    <p>Question Count Easy</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="header">
+    <h1>{{totalMed}}</h1>
+  </div>
+
+  <div class="container">
+    <p>Question Count Medium</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="header">
+    <h1>{{totalHard}}</h1>
+  </div>
+
+  <div class="container">
+    <p>Question Count Hard</p>
+  </div>
+</div>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,241 @@
+<!--
+<div [hidden]="questions.length==0">
+  <h2>Top {{attributes.perPage}} Questions per your categories</h2>
+  <div class="container-fluid">
+    <table class="table table-responsive">
+      <thead>
+        <th>#</th>
+        <th>Question</th>
+        <th>Category</th>
+      </thead>
+      <tbody>
+        <template ngFor let-question [ngForOf]="questions" let-index="index">
+          <tr (click)='showDetail(index,question)' class="clickable">
+            <td>
+              {{index+1}}</td>
+            <td> {{question.name}}</td>
+            <td>{{question.category.name}}</td>
+          </tr>
+          <tr>
+            <td colspan=3 class='detail' [hidden]='index!=selectedQuestion'>
+              <div class="container-fluid">
+                <div class='col-md-3'>
+                  <img src='{{question.image[2]["#text"]}}' class="img-responsive">
+                </div>
+                <div class="col-md-4">
+                  <h2>{{question.name}}</h2>
+                  <h4>Cateogry: {{question.category.name}}</h4>
+                  <h4>Difficulty: {{question.difficulty}}</h4>
+                  <h4>
+                    <a href='{{question.url}}' target='_new'>OpenTDB Webpage</a>
+                  </h4>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+    <br/>&nbsp;
+  </div>
+</div>
+-->
+
+<head>
+  <style>
+  .button {
+      background-color: rgb(92, 212, 228); /* Blue */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+  }
+ 
+
+  .button-2 {
+      background-color: rgb(236, 154, 60); /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+  }
+
+  .button-3 {
+      background-color: rgb(110, 236, 60); /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      -webkit-transition-duration: 0.4s; /* Safari */
+      transition-duration: 0.4s;
+  }
+  
+  .button1 {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }
+
+  .button2:hover {
+      box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+
+  .button-answer {
+    width: 15%;
+    height: 2em;
+  }
+
+
+
+  div.card {
+  width: 250px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+  margin: 12px 2px;
+  display: inline-block;
+
+}
+
+div.card:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+div.header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    font-size: 40px;
+}
+
+div.container {
+    padding: 10px;
+}
+
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+}
+
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+  </style>
+  </head>
+<div style="text-align:center">
+  <p>Click 'New Question' to get a question of any difficulty or category.</p>
+  <p>Use the buttons select a specific difficulty and category.</p>
+    <br>
+    <button class="button-3 button1" (click)="onTestGet(); show = true;">New Question</button>
+    <br>
+    <br>
+    <script>var show = false;</script>
+    <div style="font-size: larger" [hidden]="!show">
+      <div style="font-weight: bold;">Question :</div>
+      <div id="question" [innerHTML]="getQuestion"></div>
+      <br>
+      <button class="button-answer" (click)="onAnswerclick('1')"> <div [innerHTML]="Spot1"></div> </button>
+      <button class="button-answer" (click)="onAnswerclick('2')"> <div [innerHTML]="Spot2"></div> </button>
+      <button class="button-answer" (click)="onAnswerclick('3')"> <div [innerHTML]="Spot3"></div> </button>
+      <button class="button-answer" (click)="onAnswerclick('4')"> <div [innerHTML]="Spot4"></div> </button>            
+      <br>
+      <br>    
+      <div style="font-style:italic; width: 80%;" [innerHTML]="showAnswer"></div>
+      <div style="text-align: center; margin-right: 50%;"> <!-- to get right alignment with centering outside -->
+        <p style="text-align: right;">Questions Completed: <span style="font-weight: bold;">{{questionsCompleted}}</span></p>
+        <p style="text-align: right;">Score: <span style="font-weight: bold;">{{Score}}</span></p>
+      </div>
+    </div>    
+    <br>
+    <br>
+    
+
+<div id="snackbar">Chosen Difficulty: {{difficulty}}</div>
+
+<button class="button-2 button2" (click)="setDifficulty('')" (click)="alertPop()" onclick="myFunction()"> Any difficulty </button>
+<button class="button-2 button2" (click)="setDifficulty('easy')" (click)="alertPop()"> Easy </button>
+<button class="button-2 button2" (click)="setDifficulty('medium')" (click)="alertPop()"> Medium </button>
+<button class="button-2 button2" (click)="setDifficulty('hard')" (click)="alertPop()"> Hard </button>
+
+<p></p>
+<button class="button button2" (click)="setCategory(0)"> Any </button>
+<button class="button button2" (click)="setCategory(9)"> General Knowledge </button>
+<button class="button button2" (click)="setCategory(10)"> Entertainment: Books </button>
+<button class="button button2" (click)="setCategory(11)"> Entertainment: Film </button>
+<button class="button button2" (click)="setCategory(12)"> Entertainment: Music </button>
+<button class="button button2" (click)="setCategory(13)"> Entertainment: Musicals & Theatres </button>
+<button class="button button2" (click)="setCategory(14)"> Entertainment: Television </button>
+<button class="button button2" (click)="setCategory(15)"> Entertainment: Video Games </button>
+<button class="button button2" (click)="setCategory(16)"> Entertainment: Board Games </button>
+<button class="button button2" (click)="setCategory(17)"> Science & Nature </button>
+<button class="button button2" (click)="setCategory(18)"> Science: Computers </button>
+<button class="button button2" (click)="setCategory(19)"> Science: Mathematics </button>
+<button class="button button2" (click)="setCategory(20)"> Mythology </button>
+<button class="button button2" (click)="setCategory(21)"> Sports </button>
+<button class="button button2" (click)="setCategory(22)"> Geography </button>
+<button class="button button2" (click)="setCategory(23)"> History </button>
+<button class="button button2" (click)="setCategory(24)"> Politics </button>
+<button class="button button2" (click)="setCategory(25)"> Art </button>
+<button class="button button2" (click)="setCategory(26)"> Celebrities </button>
+<button class="button button2" (click)="setCategory(27)"> Animals </button>
+<button class="button button2" (click)="setCategory(28)"> Vehicles </button>
+<button class="button button2" (click)="setCategory(29)"> Entertainment: Comics </button>
+<button class="button button2" (click)="setCategory(30)"> Science: Gadgets </button>
+<button class="button button2" (click)="setCategory(31)"> Entertainment: Japanese Anime & Manga </button>
+<button class="button button2" (click)="setCategory(32)"> Entertainment: Cartoon & Animations </button>
+
+<p></p>
+</div>
+
+
+
+    
